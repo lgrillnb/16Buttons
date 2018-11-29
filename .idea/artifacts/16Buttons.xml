@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="16Buttons">
+    <output-path>$PROJECT_DIR$/out/artifacts/16Buttons</output-path>
+    <root id="archive" name="16Buttons.jar">
+      <element id="module-output" name="16Buttons" />
+    </root>
+  </artifact>
+</component>
