@@ -56,16 +56,16 @@ public class Client {
             myThread.start();
         } else if(msg.startsWith("partner is ready")){
             Game.readyPartnerLabel.setForeground(Color.GREEN);
-            int index = Game.actualPlayerList.indexOf(new JLabel(msg.split(":")[1].split("\\(")[0]));
-            Game.actualPlayerList.get(index).setBackground(Color.GREEN);
+            //int index = Game.actualPlayerList.indexOf(msg.split(":")[1].split("\\(")[0]);
+            //Game.actualPlayerList.get(index).setBackground(Color.GREEN);
         } else if(msg.startsWith("new partner")){
             Game.readyPartnerLabel.setForeground(Color.ORANGE);
-            Game.actualPlayerList.add(new JLabel(msg.split(":")[1].split("\\(")[0]));
-            int index = Game.actualPlayerList.indexOf(new JLabel(msg.split(":")[1].split("\\(")[0]));
-            Game.actualPlayerList.get(index).setBackground(Color.ORANGE);
+            Game.actualPlayerList.add(msg.split(":")[1].split("\\(")[0]);
+            //int index = Game.actualPlayerList.indexOf(msg.split(":")[1].split("\\(")[0]);
+            //Game.actualPlayerList.get(index).setBackground(Color.ORANGE);
         } else if(msg.startsWith("partner stopped")){
             Game.readyPartnerLabel.setForeground(Color.RED);
-            int index = Game.actualPlayerList.indexOf(new JLabel(msg.split(":")[1].split("\\(")[0]));
+            int index = Game.actualPlayerList.indexOf(msg.split(":")[1].split("\\(")[0]);
             Game.actualPlayerList.remove(index);
         } else if(msg.startsWith("winner")){
             String winner = msg.split(":")[1].split(";")[0];
@@ -75,8 +75,9 @@ public class Client {
             String str = msg.split(":")[1];
             while(str.contains(";")){
                 String tmpStr = str.split(";")[0];
-                int index = Game.actualPlayerList.indexOf(new JLabel(tmpStr.split("-")[0]));
-                Game.actualPlayerList.get(index).setText(tmpStr.split("-")[0].split("\\(")[0]+" ("+tmpStr.split("-")[1]+")"); //sets new Score to name
+                int index = Game.actualPlayerList.indexOf(tmpStr.split("-")[0]); //Name
+                String tmp = Game.actualPlayerList.get(index);
+                tmp = (tmpStr.split("-")[0].split("\\(")[0]+" ("+tmpStr.split("-")[1]+")"); //sets new Score to name
                 str = str.split(";")[1];
             }
         }

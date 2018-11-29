@@ -37,6 +37,12 @@ public class Server {
                 }
             } else if(ae.getActionCommand().startsWith("my name")){
                 conn.setName(ae.getActionCommand().split(":")[1]);
+                int index = connList.indexOf(conn);
+                for(int i = 0; i < connList.size(); i++){
+                    if(i != index){
+                        connList.get(i).sendMessage("new partner:" + conn.getName());   //alle anderen erfahren es gibt einen neuen
+                    }
+                }
             } else if(ae.getActionCommand().startsWith("finished clicking")){
                 finishedClickCounter++;
                 conn.setClickDuration(Integer.parseInt(ae.getActionCommand().split(":")[1]));
@@ -95,7 +101,6 @@ public class Server {
                     myConnection conn = new myConnection(server.accept());
                     conn.addActionListener(serverListner);
                     for(myConnection Conn : connList){
-                        //Conn.sendMessage("new partner:" + conn.getName());   //alle anderen erfahren es gibt einen neuen
                         conn.sendMessage("new partner:" + Conn.getName());   //informiere mich welche partner es schon gibt
                     }
                     connList.add(conn);

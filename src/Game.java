@@ -21,10 +21,10 @@ public class Game extends JFrame {
     private JMenuItem menuItemSingle;
     private JMenuItem menuItemMulti;
     private JButton readyButton;
-    private JList<JLabel> playerList = new JList<>();
+    private JList<String> playerList = new JList<>();
     protected static List<JButton> buttonList = new ArrayList<>();
     protected static List<Integer> actualButtonList = new ArrayList<>();
-    protected static Vector<JLabel> actualPlayerList = new Vector<>();
+    protected static Vector<String> actualPlayerList = new Vector<>();
     protected static Timestamp timestamp;
     private int myExit;
     private boolean startFirstClick = true;
@@ -152,7 +152,6 @@ public class Game extends JFrame {
             public void mouseClicked(MouseEvent me) {
                 if(multiplayerIsRunning && readyButton.getText() == "NOT READY"){
                     readyButton.setText("READY");
-                    client.sendMessage("my name:" + myName);
                     client.sendMessage("ready");
                 }else if (multiplayerIsRunning && readyButton.getText() == "READY") {
                     readyButton.setText("NOT READY");
@@ -203,8 +202,9 @@ public class Game extends JFrame {
                 client = new Client(tmp.host.getText(), Integer.parseInt(tmp.port.getText()));
                 client.setWinnerListener(winnerListener);
                 actualPlayerList.clear();
-                actualPlayerList.add(new JLabel(myName.split("\\(")[0]));
+                actualPlayerList.add(myName.split("\\(")[0]);
                 client.start();
+                client.sendMessage("my name:" + myName);
                 menu_showCurrent.setText("Current Modi: Multi-player");
                 timeLabel.setText("Multi-player starts now");
                 readyButton.setVisible(true);
