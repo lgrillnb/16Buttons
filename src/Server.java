@@ -6,15 +6,12 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 public class Server {
 
     private int port;
     private List<myConnection> connList = new ArrayList<>();
     private List<Integer> actualButtonList = new ArrayList<>();
-    private Vector<String> winnerScore = new Vector();
-    private String winnerString;
     private boolean running = false;
     private int readyCounter = 0;
     private int finishedClickCounter = 0;
@@ -58,17 +55,22 @@ public class Server {
                                 winner = tmp_conn.getName();
                             }
                         }
+                        String score = "";
                         //sets the actual score
                         for (myConnection connec: connList) {
                             if(connec.getName() == winner){
                                 connec.setScore(connec.getScore()+1);
                             }
+                            //build score-string
+                            score += connec.getName() + "-" + connec.getScore() + ";";
                         }
                         //current winner of this round
                         for(myConnection Conn : connList){
                             Conn.sendMessage("winner:" + winner + ";" + value);
+                            Conn.sendMessage("score:" + score);
                         }
                         System.out.println("SERVER: sent winner:" + winner + ";" + value);
+                        System.out.println("SERVER: sent score:" + score);
                         Thread.sleep(2000);
                         calcDelayAndButons();
                     } catch (InterruptedException e) {

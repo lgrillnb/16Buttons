@@ -21,13 +21,13 @@ public class Client {
         this.port = port;
     }
 
-    public void start() {
+    public void start(Game cb) {
         try {
             conn = new myConnection(new Socket(host, port));
             conn.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
-                    getMessage(ae.getActionCommand());
+                    getMessage(ae.getActionCommand(), cb);
                 }
             });
             conn.startConn();
@@ -36,14 +36,12 @@ public class Client {
         }
     }
 
-    public void getMessage(String msg) {
+    public void getMessage(String msg, Game cb) {
         System.out.println(msg);
         if (msg.startsWith("delay")) {
             delay = Integer.parseInt(msg.split(":")[1]);
-            if(Game.readyPartnerLabel.getForeground() != Color.GREEN){
-                Game.readyPartnerLabel.setForeground(Color.GREEN);
-            }
-        } else if (msg.startsWith("data")) {
+        }
+        else if (msg.startsWith("data")) {
             actualButtonList.clear();
             String[] split = msg.split(":");
             while (split[1].contains(";")) {
@@ -51,34 +49,38 @@ public class Client {
                 split[1] = split[1].split(";", 2)[1];
             }
             actualButtonList.add(Integer.parseInt(split[1]));
-        } else if (msg.startsWith("start")) {
+        }
+        else if (msg.startsWith("start")) {
             MultiRandomizerThread myThread = new MultiRandomizerThread();
             myThread.start();
-        } else if(msg.startsWith("partner is ready")){
-            Game.readyPartnerLabel.setForeground(Color.GREEN);
-            //int index = Game.actualPlayerList.indexOf(msg.split(":")[1].split("\\(")[0]);
-            //Game.actualPlayerList.get(index).setBackground(Color.GREEN);
-        } else if(msg.startsWith("new partner")){
-            Game.readyPartnerLabel.setForeground(Color.ORANGE);
-            Game.actualPlayerList.add(msg.split(":")[1].split("\\(")[0]);
-            //int index = Game.actualPlayerList.indexOf(msg.split(":")[1].split("\\(")[0]);
-            //Game.actualPlayerList.get(index).setBackground(Color.ORANGE);
-        } else if(msg.startsWith("partner stopped")){
-            Game.readyPartnerLabel.setForeground(Color.RED);
-            int index = Game.actualPlayerList.indexOf(msg.split(":")[1].split("\\(")[0]);
-            Game.actualPlayerList.remove(index);
-        } else if(msg.startsWith("winner")){
+        }
+        else if(msg.startsWith("partner is ready")){
+        }
+        else if(msg.startsWith("new partner")){
+            cb.actualPlayerList.add(msg.split(":")[1].split("\\(")[0]);
+        }
+        else if(msg.startsWith("partner stopped")){
+            int index = cb.actualPlayerList.indexOf(msg.split(":")[1].split("\\(")[0]);
+            cb.actualPlayerList.remove(index);
+        }
+        else if(msg.startsWith("winner")){
             String winner = msg.split(":")[1].split(";")[0];
             int winnerTime = Integer.parseInt(msg.split(":")[1].split(";")[1]);
             winnerListener.actionPerformed(new ActionEvent(this, 0, winner + ":" + winnerTime));
-        } else if(msg.startsWith("score")){
+        }
+        else if(msg.startsWith("score")){
             String str = msg.split(":")[1];
             while(str.contains(";")){
                 String tmpStr = str.split(";")[0];
-                int index = Game.actualPlayerList.indexOf(tmpStr.split("-")[0]); //Name
-                String tmp = Game.actualPlayerList.get(index);
-                tmp = (tmpStr.split("-")[0].split("\\(")[0]+" ("+tmpStr.split("-")[1]+")"); //sets new Score to name
-                str = str.split(";")[1];
+                int index = 0;
+                for(int i=0; i<cb.actualPlayerList.size(); i++){
+                    if(cb.actualPlayerList.get(i).startsWith(tmpStr.split("\\(")[0])){
+                        index = i;
+                    }
+                }
+                String tmp = (tmpStr.split("-")[0].split("\\(")[0]+" ("+tmpStr.split("-")[1]+")"); //sets new Score to name
+                cb.actualPlayerList.setElementAt(tmp, index);
+                str = str.split(";",2)[1];
             }
         }
     }

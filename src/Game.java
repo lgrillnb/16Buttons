@@ -14,17 +14,16 @@ public class Game extends JFrame {
     private JPanel buttonPanel;
     private JPanel timePanel;
     private JLabel timeLabel;
-    protected static JLabel readyPartnerLabel;
     private JMenuBar menuBar;
     private JMenu menu_modi;
     private JMenu menu_showCurrent;
     private JMenuItem menuItemSingle;
     private JMenuItem menuItemMulti;
     private JButton readyButton;
-    private JList<String> playerList = new JList<>();
+    private JList<String> playerList;
     protected static List<JButton> buttonList = new ArrayList<>();
     protected static List<Integer> actualButtonList = new ArrayList<>();
-    protected static Vector<String> actualPlayerList = new Vector<>();
+    protected Vector<String> actualPlayerList = new Vector<>();
     protected static Timestamp timestamp;
     private int myExit;
     private boolean startFirstClick = true;
@@ -85,13 +84,11 @@ public class Game extends JFrame {
         timeLabel = new JLabel("To start select a game-modi");
         readyButton = new JButton("NOT READY");
         readyButton.setVisible(false);
-        readyPartnerLabel = new JLabel("PARTNER");
-        readyPartnerLabel.setForeground(Color.RED);
-        readyPartnerLabel.setVisible(false);
         timePanel = new JPanel(new FlowLayout());
         timePanel.add(readyButton);
         timePanel.add(timeLabel);
-        timePanel.add(readyPartnerLabel);
+        playerList = new JList<>();
+        playerList.setFixedCellWidth(100);
         playerList.setVisible(false);
 
         this.add(menuBar, BorderLayout.NORTH);
@@ -203,12 +200,11 @@ public class Game extends JFrame {
                 client.setWinnerListener(winnerListener);
                 actualPlayerList.clear();
                 actualPlayerList.add(myName.split("\\(")[0]);
-                client.start();
+                client.start(Game.this);
                 client.sendMessage("my name:" + myName);
                 menu_showCurrent.setText("Current Modi: Multi-player");
                 timeLabel.setText("Multi-player starts now");
                 readyButton.setVisible(true);
-                readyPartnerLabel.setVisible(true);
                 playerList.setListData(actualPlayerList);
                 playerList.setVisible(true);
                 multiplayerIsRunning = true;
@@ -228,7 +224,6 @@ public class Game extends JFrame {
         timeLabel.setText("Multi-player stopped");
         readyButton.setText("NOT READY");
         readyButton.setVisible(false);
-        readyPartnerLabel.setVisible(false);
     }
 
     public static void main(String[] args) {
