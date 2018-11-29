@@ -127,7 +127,7 @@ public class Game extends JFrame {
                     stopMultiplayer();
                     startSingleplayer();
                     timeLabel.setText("Single-player starts now");
-                } else if(!multiplayerIsRunning && !singleplayerIsRunning){
+                } else if(!singleplayerIsRunning){
                     startSingleplayer();
                     timeLabel.setText("Single-player starts now");
                 }

@@ -60,7 +60,12 @@ public class Client {
             cb.actualPlayerList.add(msg.split(":")[1].split("\\(")[0]);
         }
         else if(msg.startsWith("partner stopped")){
-            int index = cb.actualPlayerList.indexOf(msg.split(":")[1].split("\\(")[0]);
+            int index = 0;
+            for(int i=0; i<cb.actualPlayerList.size(); i++){
+                if(cb.actualPlayerList.get(i).startsWith(msg.split(":")[1].split("\\(")[0])){
+                    index = i;
+                }
+            }
             cb.actualPlayerList.remove(index);
         }
         else if(msg.startsWith("winner")){
