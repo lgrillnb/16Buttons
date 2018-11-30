@@ -55,9 +55,16 @@ public class Client {
             myThread.start();
         }
         else if(msg.startsWith("partner is ready")){
+            /*String partner = msg.split(":")[1].split("\\(")[0];
+            int index = 0;
+            for(int i=0; i<cb.playerList.getModel().getSize(); i++){
+                if(cb.playerList.getModel().getElementAt(i).startsWith(partner)){
+                    index = i;
+                }
+            }
+            ((DefaultListModel<String>)cb.playerList.getModel()).get(index); */  //todo: Hintergrund- oder Fontfarbe soll sich ändern
         }
         else if(msg.startsWith("new partner")){
-            //cb.actualPlayerList.add(msg.split(":")[1].split("\\(")[0]);
             ((DefaultListModel<String>)cb.playerList.getModel()).addElement(msg.split(":")[1].split("\\(")[0]);
         }
         else if(msg.startsWith("partner stopped")){
@@ -85,7 +92,6 @@ public class Client {
                     }
                 }
                 String tmp = (tmpStr.split("-")[0].split("\\(")[0]+" ("+tmpStr.split("-")[1]+")"); //sets new Score to name
-                //cb.actualPlayerList.setElementAt(tmp, index);
                 ((DefaultListModel<String>)cb.playerList.getModel()).setElementAt(tmp, index);
                 str = str.split(";",2)[1];
             }

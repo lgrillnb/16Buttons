@@ -23,7 +23,6 @@ public class Game extends JFrame {
     protected JList<String> playerList;
     protected static List<JButton> buttonList = new ArrayList<>();
     protected static List<Integer> actualButtonList = new ArrayList<>();
-    //protected Vector<String> actualPlayerList = new Vector<>();
     protected static Timestamp timestamp;
     private int myExit;
     private boolean startFirstClick = true;
@@ -42,7 +41,7 @@ public class Game extends JFrame {
             JOptionPane pane;
             JDialog dialog;
             if(winner.contentEquals(myName)){
-                pane = new JOptionPane("You are the winner!!!  Name["+ winner.split("\\(")[0] +"]  time["+ winnerTime +"]", JOptionPane.INFORMATION_MESSAGE);
+                pane = new JOptionPane("You are the winner!!!  time["+ winnerTime +"]", JOptionPane.INFORMATION_MESSAGE);
                 dialog = pane.createDialog(null, "Game Info");
                 dialog.setModal(false);
                 dialog.setVisible(true);
@@ -199,7 +198,6 @@ public class Game extends JFrame {
                 menu_showCurrent.setText("Current Modi: Multi-player");
                 timeLabel.setText("Multi-player starts now");
                 readyButton.setVisible(true);
-                //playerList.setListData(actualPlayerList);
                 playerList.setVisible(true);
                 multiplayerIsRunning = true;
             }
