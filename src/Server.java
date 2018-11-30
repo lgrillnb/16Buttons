@@ -15,7 +15,6 @@ public class Server {
     private boolean running = false;
     private int readyCounter = 0;
     private int finishedClickCounter = 0;
-    private final int playerCount = 2;  //zurzeit für zwei Spieler, wenn mehr gewünscht sind muss man ein paar Kleinigkeiten ändern
     private ActionListener serverListner = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent ae) {
@@ -29,7 +28,7 @@ public class Server {
                         connList.get(i).sendMessage("partner is ready:" + conn.getName());
                     }
                 }
-                if(readyCounter == playerCount){
+                if(readyCounter == connList.size() && readyCounter > 1){
                     calcDelayAndButons();
                 }
             } else if(ae.getActionCommand().startsWith("my name")){
@@ -43,7 +42,7 @@ public class Server {
             } else if(ae.getActionCommand().startsWith("finished clicking")){
                 finishedClickCounter++;
                 conn.setClickDuration(Integer.parseInt(ae.getActionCommand().split(":")[1]));
-                if(finishedClickCounter == playerCount) {
+                if(finishedClickCounter == connList.size() && finishedClickCounter > 1) {
                     try {
                         //get the current winner
                         finishedClickCounter = 0;
