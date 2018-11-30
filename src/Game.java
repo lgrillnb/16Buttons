@@ -20,10 +20,10 @@ public class Game extends JFrame {
     private JMenuItem menuItemSingle;
     private JMenuItem menuItemMulti;
     private JButton readyButton;
-    private JList<String> playerList;
+    protected JList<String> playerList;
     protected static List<JButton> buttonList = new ArrayList<>();
     protected static List<Integer> actualButtonList = new ArrayList<>();
-    protected Vector<String> actualPlayerList = new Vector<>();
+    //protected Vector<String> actualPlayerList = new Vector<>();
     protected static Timestamp timestamp;
     private int myExit;
     private boolean startFirstClick = true;
@@ -52,12 +52,7 @@ public class Game extends JFrame {
                 dialog.setModal(false);
                 dialog.setVisible(true);
             }
-            new Timer(2000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dialog.setVisible(false);
-                }
-            }).start();
+            new Timer(2000, e -> dialog.setVisible(false)).start();
         }
     };
 
@@ -87,7 +82,7 @@ public class Game extends JFrame {
         timePanel = new JPanel(new FlowLayout());
         timePanel.add(readyButton);
         timePanel.add(timeLabel);
-        playerList = new JList<>();
+        playerList = new JList<>(new DefaultListModel<>());
         playerList.setFixedCellWidth(100);
         playerList.setVisible(false);
 
@@ -198,14 +193,13 @@ public class Game extends JFrame {
                 myName = tmp.name.getText() + "(" + Math.round(Math.random()*1000) + ")";
                 client = new Client(tmp.host.getText(), Integer.parseInt(tmp.port.getText()));
                 client.setWinnerListener(winnerListener);
-                actualPlayerList.clear();
-                actualPlayerList.add(myName.split("\\(")[0]);
+                ((DefaultListModel<String>)playerList.getModel()).addElement(myName.split("\\(")[0]);
                 client.start(Game.this);
                 client.sendMessage("my name:" + myName);
                 menu_showCurrent.setText("Current Modi: Multi-player");
                 timeLabel.setText("Multi-player starts now");
                 readyButton.setVisible(true);
-                playerList.setListData(actualPlayerList);
+                //playerList.setListData(actualPlayerList);
                 playerList.setVisible(true);
                 multiplayerIsRunning = true;
             }
@@ -224,6 +218,8 @@ public class Game extends JFrame {
         timeLabel.setText("Multi-player stopped");
         readyButton.setText("NOT READY");
         readyButton.setVisible(false);
+        this.playerList.setVisible(false);
+        ((DefaultListModel<String>)this.playerList.getModel()).removeAllElements();
     }
 
     public static void main(String[] args) {

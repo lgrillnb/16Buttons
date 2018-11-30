@@ -57,16 +57,17 @@ public class Client {
         else if(msg.startsWith("partner is ready")){
         }
         else if(msg.startsWith("new partner")){
-            cb.actualPlayerList.add(msg.split(":")[1].split("\\(")[0]);
+            //cb.actualPlayerList.add(msg.split(":")[1].split("\\(")[0]);
+            ((DefaultListModel<String>)cb.playerList.getModel()).addElement(msg.split(":")[1].split("\\(")[0]);
         }
         else if(msg.startsWith("partner stopped")){
             int index = 0;
-            for(int i=0; i<cb.actualPlayerList.size(); i++){
-                if(cb.actualPlayerList.get(i).startsWith(msg.split(":")[1].split("\\(")[0])){
+            for(int i=0; i<cb.playerList.getModel().getSize(); i++){
+                if(cb.playerList.getModel().getElementAt(i).startsWith(msg.split(":")[1].split("\\(")[0])){
                     index = i;
                 }
             }
-            cb.actualPlayerList.remove(index);
+            ((DefaultListModel<String>)cb.playerList.getModel()).remove(index);
         }
         else if(msg.startsWith("winner")){
             String winner = msg.split(":")[1].split(";")[0];
@@ -78,13 +79,14 @@ public class Client {
             while(str.contains(";")){
                 String tmpStr = str.split(";")[0];
                 int index = 0;
-                for(int i=0; i<cb.actualPlayerList.size(); i++){
-                    if(cb.actualPlayerList.get(i).startsWith(tmpStr.split("\\(")[0])){
+                for(int i=0; i<cb.playerList.getModel().getSize(); i++){
+                    if(cb.playerList.getModel().getElementAt(i).startsWith(tmpStr.split("\\(")[0])){
                         index = i;
                     }
                 }
                 String tmp = (tmpStr.split("-")[0].split("\\(")[0]+" ("+tmpStr.split("-")[1]+")"); //sets new Score to name
-                cb.actualPlayerList.setElementAt(tmp, index);
+                //cb.actualPlayerList.setElementAt(tmp, index);
+                ((DefaultListModel<String>)cb.playerList.getModel()).setElementAt(tmp, index);
                 str = str.split(";",2)[1];
             }
         }
