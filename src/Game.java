@@ -56,7 +56,6 @@ public class Game extends JFrame {
     };
 
     public Game() {
-        //test line
         this.setTitle("16 Buttons Game");
         this.setSize(600, 400);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -145,6 +144,7 @@ public class Game extends JFrame {
                 if(multiplayerIsRunning && readyButton.getText() == "NOT READY"){
                     readyButton.setText("READY");
                     client.sendMessage("ready");
+                    ((DefaultListModel<String>)playerList.getModel()).setElementAt(myName.split("\\(")[0] + " [ready]", 0);
                 }else if (multiplayerIsRunning && readyButton.getText() == "READY") {
                     readyButton.setText("NOT READY");
                     stopMultiplayer();

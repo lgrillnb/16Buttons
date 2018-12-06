@@ -55,14 +55,16 @@ public class Client {
             myThread.start();
         }
         else if(msg.startsWith("partner is ready")){
-            /*String partner = msg.split(":")[1].split("\\(")[0];
+            String partner = msg.split(":")[1].split("\\(")[0];
             int index = 0;
             for(int i=0; i<cb.playerList.getModel().getSize(); i++){
                 if(cb.playerList.getModel().getElementAt(i).startsWith(partner)){
                     index = i;
                 }
             }
-            ((DefaultListModel<String>)cb.playerList.getModel()).get(index); */  //todo: Hintergrund- oder Fontfarbe soll sich ändern
+            partner = ((DefaultListModel<String>)cb.playerList.getModel()).get(index);
+            partner += " [ready]";
+            ((DefaultListModel<String>)cb.playerList.getModel()).setElementAt(partner, index);
         }
         else if(msg.startsWith("new partner")){
             ((DefaultListModel<String>)cb.playerList.getModel()).addElement(msg.split(":")[1].split("\\(")[0]);
