@@ -132,7 +132,7 @@ public class Game extends JFrame {
                 startFirstClick = false;
                 startMultiplayer();
             } else {
-                if(singleplayerIsRunning) {
+                if(!multiplayerIsRunning) {
                     stopSingleplayer();
                     startMultiplayer();
                 }
@@ -189,18 +189,23 @@ public class Game extends JFrame {
         iw.setListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                InputWindow tmp = (InputWindow) ae.getSource();
-                myName = tmp.name.getText() + "(" + Math.round(Math.random()*1000) + ")";
-                client = new Client(tmp.host.getText(), Integer.parseInt(tmp.port.getText()));
-                client.setWinnerListener(winnerListener);
-                ((DefaultListModel<String>)playerList.getModel()).addElement(myName.split("\\(")[0]);
-                client.start(Game.this);
-                client.sendMessage("my name:" + myName);
-                menu_showCurrent.setText("Current Modi: Multi-player");
-                timeLabel.setText("Multi-player starts now");
-                readyButton.setVisible(true);
-                playerList.setVisible(true);
-                multiplayerIsRunning = true;
+                try {
+                    InputWindow tmp = (InputWindow) ae.getSource();
+                    myName = tmp.name.getText() + "(" + Math.round(Math.random() * 1000) + ")";
+                    client = new Client(tmp.host.getText(), Integer.parseInt(tmp.port.getText()));
+                    client.setWinnerListener(winnerListener);
+                    ((DefaultListModel<String>) playerList.getModel()).addElement(myName.split("\\(")[0]);
+                    client.start(Game.this);
+                    client.sendMessage("my name:" + myName);
+                    menu_showCurrent.setText("Current Modi: Multi-player");
+                    timeLabel.setText("Multi-player starts now");
+                    readyButton.setVisible(true);
+                    playerList.setVisible(true);
+                    multiplayerIsRunning = true;
+                } catch (Exception e){
+                    e.printStackTrace();
+                    timeLabel.setText("-- Failed to connect --");
+                }
             }
         });
     }
