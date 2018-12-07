@@ -11,10 +11,11 @@ public class Client {
 
     private int port;
     private String host;
-    protected static List<Integer> actualButtonList = new ArrayList<>();
-    protected static int delay = 0;
+    protected List<Integer> actualButtonList = new ArrayList<>();
+    protected int delay = 0;
     private myConnection conn;
     private ActionListener winnerListener;
+    private Game callBack;
 
     public Client(String host, int port) {
         this.host = host;
@@ -22,6 +23,7 @@ public class Client {
     }
 
     public void start(Game cb) {
+        callBack = cb;
         try {
             conn = new myConnection(new Socket(host, port));
             conn.addActionListener(new ActionListener() {
@@ -52,6 +54,7 @@ public class Client {
         }
         else if (msg.startsWith("start")) {
             MultiRandomizerThread myThread = new MultiRandomizerThread();
+            myThread.setCallBack(callBack, this);
             myThread.start();
         }
         else if(msg.startsWith("partner is ready")){

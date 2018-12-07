@@ -3,21 +3,29 @@ import java.awt.*;
 import java.sql.Timestamp;
 
 public class MultiRandomizerThread extends Thread {
+    private Game game;
+    private Client client;
+    
     @Override
     public synchronized void run() {
-        Game.actualButtonList = Client.actualButtonList;
+        game.actualButtonList = client.actualButtonList;
         try {
-            sleep(Client.delay);
+            sleep(client.delay);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        if(Game.multiplayerIsRunning) {
-            for (Integer i : Game.actualButtonList) {
-                JButton tmpButton = Game.buttonList.get(i - 1);
+        if(game.multiplayerIsRunning) {
+            for (Integer i : game.actualButtonList) {
+                JButton tmpButton = game.buttonList.get(i - 1);
                 tmpButton.setEnabled(true);
                 tmpButton.setBackground(Color.GREEN);
             }
         }
-        Game.timestamp = new Timestamp(System.currentTimeMillis());
+        game.timestamp = new Timestamp(System.currentTimeMillis());
+    }
+
+    public void setCallBack(Game game, Client client){
+        this.game = game;
+        this.client = client;
     }
 }

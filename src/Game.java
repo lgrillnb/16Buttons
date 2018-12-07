@@ -21,13 +21,13 @@ public class Game extends JFrame {
     private JMenuItem menuItemMulti;
     private JButton readyButton;
     protected JList<String> playerList;
-    protected static List<JButton> buttonList = new ArrayList<>();
-    protected static List<Integer> actualButtonList = new ArrayList<>();
-    protected static Timestamp timestamp;
+    protected List<JButton> buttonList = new ArrayList<>();
+    protected List<Integer> actualButtonList = new ArrayList<>();
+    protected Timestamp timestamp;
     private int myExit;
     private boolean startFirstClick = true;
-    protected static boolean singleplayerIsRunning = false;
-    protected static boolean multiplayerIsRunning = false;
+    protected boolean singleplayerIsRunning = false;
+    protected boolean multiplayerIsRunning = false;
     private SingleRandomizerThread SingleRandomizerThread;
     private Client client;
     private String myName;
@@ -132,7 +132,7 @@ public class Game extends JFrame {
                 startFirstClick = false;
                 startMultiplayer();
             } else {
-                if(!multiplayerIsRunning) {
+                if(singleplayerIsRunning) {
                     stopSingleplayer();
                     startMultiplayer();
                 }
@@ -169,6 +169,7 @@ public class Game extends JFrame {
 
     private void startSingleplayer() {
         SingleRandomizerThread = new SingleRandomizerThread();
+        SingleRandomizerThread.setCallBack(this);
         SingleRandomizerThread.start();
         singleplayerIsRunning = true;
         menu_showCurrent.setText("Current Modi: Single-player");
