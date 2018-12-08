@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class InputWindow extends JFrame {
 
@@ -34,6 +36,14 @@ public class InputWindow extends JFrame {
             public void actionPerformed(ActionEvent ae) {
                 InputWindow.this.setVisible(false);
                 saveListener.actionPerformed(new ActionEvent(InputWindow.this, 0, ""));
+            }
+        });
+        okButton.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(e.getKeyChar() == '\n'){
+                    okButton.doClick();
+                }
             }
         });
 

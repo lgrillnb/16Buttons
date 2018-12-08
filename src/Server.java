@@ -75,6 +75,8 @@ public class Server {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                } else if(finishedClickCounter == connList.size()){
+                    finishedClickCounter = 0;
                 }
             } else if(ae.getActionCommand().startsWith("exit connection")){
                 connList.remove(conn);
