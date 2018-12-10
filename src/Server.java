@@ -75,8 +75,6 @@ public class Server {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                } else if(finishedClickCounter == connList.size()){
-                    finishedClickCounter = 0;
                 }
             } else if(ae.getActionCommand().startsWith("exit connection")){
                 connList.remove(conn);
@@ -87,6 +85,13 @@ public class Server {
                 for(myConnection Conn : connList){
                     Conn.sendMessage("partner stopped:" + conn.getName());
                 }
+            } else if(ae.getActionCommand().startsWith("chat")){
+                /**
+                 * nachricht auslesen
+                 * absender herausfinden
+                 * Nachricht aufbau: absender: bla bla      Zahl herausfiltern
+                 * Nachricht an alle anderen schicken, nicht an mich selber
+                 */
             }
         }
     };

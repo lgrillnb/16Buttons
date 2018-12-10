@@ -21,13 +21,14 @@ public class Game extends JFrame {
     private JMenuItem menuItemMulti;
     private JButton readyButton;
     protected JList<String> playerList;
-    protected List<JButton> buttonList = new ArrayList<>();
-    protected List<Integer> actualButtonList = new ArrayList<>();
-    protected Timestamp timestamp;
+    protected static List<JButton> buttonList = new ArrayList<>();
+    protected static List<Integer> actualButtonList = new ArrayList<>();
+    protected static Timestamp timestamp;
+    //protected Chat blabal;
     private int myExit;
     private boolean startFirstClick = true;
-    protected boolean singleplayerIsRunning = false;
-    protected boolean multiplayerIsRunning = false;
+    protected static boolean singleplayerIsRunning = false;
+    protected static boolean multiplayerIsRunning = false;
     private SingleRandomizerThread SingleRandomizerThread;
     private Client client;
     private String myName;
@@ -144,7 +145,6 @@ public class Game extends JFrame {
                 if(multiplayerIsRunning && readyButton.getText() == "NOT READY"){
                     readyButton.setText("READY");
                     client.sendMessage("ready");
-                    ((DefaultListModel<String>)playerList.getModel()).setElementAt(myName.split("\\(")[0] + " [ready]", 0);
                 }else if (multiplayerIsRunning && readyButton.getText() == "READY") {
                     readyButton.setText("NOT READY");
                     stopMultiplayer();
@@ -169,7 +169,6 @@ public class Game extends JFrame {
 
     private void startSingleplayer() {
         SingleRandomizerThread = new SingleRandomizerThread();
-        SingleRandomizerThread.setCallBack(this);
         SingleRandomizerThread.start();
         singleplayerIsRunning = true;
         menu_showCurrent.setText("Current Modi: Single-player");
@@ -186,27 +185,30 @@ public class Game extends JFrame {
     }
 
     private void startMultiplayer() {
+
         InputWindow iw = new InputWindow();
         iw.setListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                try {
-                    InputWindow tmp = (InputWindow) ae.getSource();
-                    myName = tmp.name.getText() + "(" + Math.round(Math.random() * 1000) + ")";
-                    client = new Client(tmp.host.getText(), Integer.parseInt(tmp.port.getText()));
-                    client.setWinnerListener(winnerListener);
-                    ((DefaultListModel<String>) playerList.getModel()).addElement(myName.split("\\(")[0]);
-                    client.start(Game.this);
-                    client.sendMessage("my name:" + myName);
-                    menu_showCurrent.setText("Current Modi: Multi-player");
-                    timeLabel.setText("Multi-player starts now");
-                    readyButton.setVisible(true);
-                    playerList.setVisible(true);
-                    multiplayerIsRunning = true;
-                } catch (Exception e){
-                    e.printStackTrace();
-                    timeLabel.setText("-- Failed to connect --");
-                }
+                InputWindow tmp = (InputWindow) ae.getSource();
+                myName = tmp.name.getText() + "(" + Math.round(Math.random()*1000) + ")";
+                client = new Client(tmp.host.getText(), Integer.parseInt(tmp.port.getText()));
+                client.setWinnerListener(winnerListener);
+                ((DefaultListModel<String>)playerList.getModel()).addElement(myName.split("\\(")[0]);
+                client.start(Game.this);
+                client.sendMessage("my name:" + myName);
+                menu_showCurrent.setText("Current Modi: Multi-player");
+                timeLabel.setText("Multi-player starts now");
+                readyButton.setVisible(true);
+                playerList.setVisible(true);
+                multiplayerIsRunning = true;
+
+                /**
+                 * selbe nur fuer Chat
+                 * globale variable inizialisieren
+                 * chat = new chat();
+                 *
+                 */
             }
         });
     }
@@ -225,6 +227,10 @@ public class Game extends JFrame {
         readyButton.setVisible(false);
         this.playerList.setVisible(false);
         ((DefaultListModel<String>)this.playerList.getModel()).removeAllElements();
+
+        /**
+         * Chat schließen
+         */
     }
 
     public static void main(String[] args) {

@@ -11,11 +11,10 @@ public class Client {
 
     private int port;
     private String host;
-    protected List<Integer> actualButtonList = new ArrayList<>();
-    protected int delay = 0;
+    protected static List<Integer> actualButtonList = new ArrayList<>();
+    protected static int delay = 0;
     private myConnection conn;
     private ActionListener winnerListener;
-    private Game callBack;
 
     public Client(String host, int port) {
         this.host = host;
@@ -23,7 +22,6 @@ public class Client {
     }
 
     public void start(Game cb) {
-        callBack = cb;
         try {
             conn = new myConnection(new Socket(host, port));
             conn.addActionListener(new ActionListener() {
@@ -54,20 +52,17 @@ public class Client {
         }
         else if (msg.startsWith("start")) {
             MultiRandomizerThread myThread = new MultiRandomizerThread();
-            myThread.setCallBack(callBack, this);
             myThread.start();
         }
         else if(msg.startsWith("partner is ready")){
-            String partner = msg.split(":")[1].split("\\(")[0];
+            /*String partner = msg.split(":")[1].split("\\(")[0];
             int index = 0;
             for(int i=0; i<cb.playerList.getModel().getSize(); i++){
                 if(cb.playerList.getModel().getElementAt(i).startsWith(partner)){
                     index = i;
                 }
             }
-            partner = ((DefaultListModel<String>)cb.playerList.getModel()).get(index);
-            partner += " [ready]";
-            ((DefaultListModel<String>)cb.playerList.getModel()).setElementAt(partner, index);
+            ((DefaultListModel<String>)cb.playerList.getModel()).get(index); */  //todo: Hintergrund- oder Fontfarbe soll sich ändern
         }
         else if(msg.startsWith("new partner")){
             ((DefaultListModel<String>)cb.playerList.getModel()).addElement(msg.split(":")[1].split("\\(")[0]);
@@ -101,6 +96,14 @@ public class Client {
                 str = str.split(";",2)[1];
             }
         }
+
+        /**
+         * else if fuer den Chat
+         * über callback zurückgreifen
+         * cb.blabla.FUNKTION (z.B sendMessage, addMessage
+         * callback zurueckgeben an GAME, anschließend and Chat
+         * weitergeben und chathistory weiter auffuellen
+         */
     }
 
     public void sendMessage(String msg) {
