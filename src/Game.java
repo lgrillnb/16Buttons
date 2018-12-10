@@ -24,7 +24,7 @@ public class Game extends JFrame {
     protected static List<JButton> buttonList = new ArrayList<>();
     protected static List<Integer> actualButtonList = new ArrayList<>();
     protected static Timestamp timestamp;
-    //protected Chat blabal;
+    protected Chat chathistory;
     private int myExit;
     private boolean startFirstClick = true;
     protected static boolean singleplayerIsRunning = false;
@@ -204,11 +204,10 @@ public class Game extends JFrame {
                 multiplayerIsRunning = true;
 
                 /**
-                 * selbe nur fuer Chat
                  * globale variable inizialisieren
                  * chat = new chat();
-                 *
                  */
+                chathistory = new Chat();
             }
         });
     }
@@ -228,6 +227,7 @@ public class Game extends JFrame {
         this.playerList.setVisible(false);
         ((DefaultListModel<String>)this.playerList.getModel()).removeAllElements();
 
+        chathistory.setVisible(false);
         /**
          * Chat schließen
          */
