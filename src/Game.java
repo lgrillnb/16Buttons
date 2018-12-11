@@ -207,7 +207,7 @@ public class Game extends JFrame {
                  * globale variable inizialisieren
                  * chat = new chat();
                  */
-                chathistory = new Chat();
+                chathistory = new Chat(Game.this);
             }
         });
     }
