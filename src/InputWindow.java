@@ -34,8 +34,14 @@ public class InputWindow extends JFrame {
         okButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                InputWindow.this.setVisible(false);
-                saveListener.actionPerformed(new ActionEvent(InputWindow.this, 0, ""));
+                String tempname = name.getText();
+                if(tempname.contains("(") || tempname.contains(")") || tempname.contains("[") || tempname.contains("]")
+                        || tempname.contains("{") || tempname.contains("}")){
+                    name.setText("");
+                }else {
+                    InputWindow.this.setVisible(false);
+                    saveListener.actionPerformed(new ActionEvent(InputWindow.this, 0, ""));
+                }
             }
         });
         okButton.addKeyListener(new KeyAdapter() {
