@@ -207,12 +207,13 @@ public class Game extends JFrame {
                     readyButton.setVisible(true);
                     playerList.setVisible(true);
                     multiplayerIsRunning = true;
-
-                    /**
-                     * globale variable inizialisieren
-                     * chat = new chat();
-                     */
                     chathistory = new Chat(Game.this);
+                    chathistory.setSendListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent actionEvent) {
+                            client.sendMessage(actionEvent.getActionCommand());
+                        }
+                    });
                 } catch (Exception e){
                     e.printStackTrace();
                     timeLabel.setText("-- Failed to connect --");

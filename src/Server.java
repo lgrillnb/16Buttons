@@ -88,12 +88,10 @@ public class Server {
                     Conn.sendMessage("partner stopped:" + conn.getName());
                 }
             } else if(ae.getActionCommand().startsWith("chat")){
-                /**
-                 * nachricht auslesen
-                 * absender herausfinden
-                 * Nachricht aufbau: absender: bla bla      Zahl herausfiltern
-                 * Nachricht an alle anderen schicken, nicht an mich selber
-                 */
+                for (myConnection Conn: connList) {
+                    Conn.sendMessage("chat;" + conn.getName().split("\\(")[0]+ ": " + ae.getActionCommand().split(";")[1]);
+                }
+
             }
         }
     };

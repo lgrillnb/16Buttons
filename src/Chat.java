@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Chat extends JFrame {
 
@@ -9,7 +11,8 @@ public class Chat extends JFrame {
     private JPanel subpanel;
     private JTextField input;
     private JButton butsend;
-    private JTextPane chathistory;
+    private JTextArea chathistory;
+    private ActionListener sendListener;
 
     public Chat(Game cb){
         this.setTitle("Chat");
@@ -19,13 +22,31 @@ public class Chat extends JFrame {
         this.setLocation(cb.getLocation().x + cb.getWidth() - 10, cb.getLocation().y);
 
         input = new JTextField();
-        chathistory = new JTextPane();
+        chathistory = new JTextArea();
         chathistory.setEditable(false);
         butsend = new JButton("SEND");
         butsend.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Message einfuegen
+                sendListener.actionPerformed(new ActionEvent(this, 0, "chat;" + input.getText()));
+                input.setText("");
+            }
+        });
+        input.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(e.getKeyChar() == '\n'){
+                    butsend.doClick();
+                }
+            }
+        });
+        butsend.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(e.getKeyChar() == '\n'){
+                    butsend.doClick();
+                }
             }
         });
 
@@ -40,11 +61,11 @@ public class Chat extends JFrame {
 
     }
 
-    /**
-     * Refresh chathistory
-     * @param message
-     */
     public void setChathistory(String message){
+        chathistory.append(message + "\n");
+    }
 
+    public void setSendListener(ActionListener sendListener){
+        this.sendListener = sendListener;
     }
 }
