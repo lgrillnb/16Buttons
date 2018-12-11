@@ -1,10 +1,7 @@
 import javax.swing.*;
 import javax.swing.Timer;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.List;
@@ -150,6 +147,12 @@ public class Game extends JFrame {
                     readyButton.setText("NOT READY");
                     stopMultiplayer();
                 }
+            }
+        });
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                stopMultiplayer();
             }
         });
     }
