@@ -38,6 +38,13 @@ public class InputWindow extends JFrame {
                 if(tempname.contains("(") || tempname.contains(")") || tempname.contains("[") || tempname.contains("]")
                         || tempname.contains("{") || tempname.contains("}")){
                     name.setText("");
+                    JOptionPane pane = new JOptionPane("Name do not must contain brackets");
+                    JDialog namedialog = pane.createDialog("Wrong Name");
+                    namedialog.setModal(false);
+                    namedialog.setVisible(true);
+                    new Timer(2000, e -> namedialog.setVisible(false)).start();
+
+
                 }else {
                     InputWindow.this.setVisible(false);
                     saveListener.actionPerformed(new ActionEvent(InputWindow.this, 0, ""));

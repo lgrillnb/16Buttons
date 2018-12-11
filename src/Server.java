@@ -89,7 +89,7 @@ public class Server {
                 }
             } else if(ae.getActionCommand().startsWith("chat")){
                 for (myConnection Conn: connList) {
-                    Conn.sendMessage("chat;" + conn.getName().split("\\(")[0]+ ": " + ae.getActionCommand().split(";")[1]);
+                    Conn.sendMessage("chat;" + conn.getName().split("\\(")[0]+ ": " + '\t' + ae.getActionCommand().split(";")[1]);
                 }
 
             }
