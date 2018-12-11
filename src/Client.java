@@ -101,6 +101,13 @@ public class Client {
                 str = str.split(";",2)[1];
             }
         }
+        /**
+         * else if fuer den Chat
+         * über callback zurückgreifen
+         * cb.blabla.FUNKTION (z.B sendMessage, addMessage
+         * callback zurueckgeben an GAME, anschließend and Chat
+         * weitergeben und chathistory weiter auffuellen
+         */
     }
 
     public void sendMessage(String msg) {

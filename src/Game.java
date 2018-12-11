@@ -25,6 +25,7 @@ public class Game extends JFrame {
     protected List<Integer> actualButtonList = new ArrayList<>();
     protected Timestamp timestamp;
     private int myExit;
+    protected Chat chathistory;
     private boolean startFirstClick = true;
     protected boolean singleplayerIsRunning = false;
     protected boolean multiplayerIsRunning = false;
@@ -203,6 +204,12 @@ public class Game extends JFrame {
                     readyButton.setVisible(true);
                     playerList.setVisible(true);
                     multiplayerIsRunning = true;
+
+                    /**
+                     * globale variable inizialisieren
+                     * chat = new chat();
+                     */
+                    chathistory = new Chat(Game.this);
                 } catch (Exception e){
                     e.printStackTrace();
                     timeLabel.setText("-- Failed to connect --");
@@ -225,6 +232,8 @@ public class Game extends JFrame {
         readyButton.setVisible(false);
         this.playerList.setVisible(false);
         ((DefaultListModel<String>)this.playerList.getModel()).removeAllElements();
+
+        chathistory.setVisible(false);
     }
 
     public static void main(String[] args) {
