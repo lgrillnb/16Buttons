@@ -150,10 +150,31 @@ public class Game extends JFrame {
             }
         });
         this.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent windowEvent) {
-                stopMultiplayer();
-            }
+                @Override
+                public void windowClosing(WindowEvent windowEvent) {
+                    stopMultiplayer();
+                }
+                @Override
+                public void windowDeiconified(WindowEvent windowEvent) {
+                    if (chathistory != null) {
+                        chathistory.setLocation(Game.this.getLocation().x + Game.this.getWidth() - 10, Game.this.getLocation().y);
+                        chathistory.setState(JFrame.NORMAL);
+                    }
+                }
+                @Override
+                public void windowIconified(WindowEvent windowEvent) {
+                    if (chathistory != null) {
+                        chathistory.setState(Frame.ICONIFIED);
+                    }
+                }
+            });
+        this.addComponentListener(new ComponentAdapter() {
+                @Override
+                public void componentMoved(ComponentEvent componentEvent) {
+                    if (chathistory != null) {
+                        chathistory.setLocation(Game.this.getLocation().x + Game.this.getWidth() - 10, Game.this.getLocation().y);
+                    }
+                }
         });
     }
 
