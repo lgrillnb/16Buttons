@@ -176,6 +176,14 @@ public class Game extends JFrame {
                     }
                 }
         });
+        this.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent keyEvent) {
+                if (keyEvent.getKeyChar() == ' '){
+                    chathistory.setFocusOnInput();
+                }
+            }
+        });
     }
 
     private void addCompToButtonPanel() {

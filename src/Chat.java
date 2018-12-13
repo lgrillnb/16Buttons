@@ -68,4 +68,8 @@ public class Chat extends JFrame {
     public void setSendListener(ActionListener sendListener){
         this.sendListener = sendListener;
     }
+
+    public void setFocusOnInput() {
+        this.input.requestFocus();
+    }
 }
