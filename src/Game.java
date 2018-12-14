@@ -68,7 +68,7 @@ public class Game extends JFrame {
         menu_showCurrent.setEnabled(false);
         menuItemSingle = new JMenuItem("Single-player");
         menuItemMulti = new JMenuItem("Multi-player");
-        menu_modi.add(menuItemSingle);
+        menu_modi.add(menuItemSingle);                      //todo: add Info-menu to show all functions and shortcuts
         menu_modi.add(menuItemMulti);
         menuBar.add(menu_modi);
         menuBar.add(menu_showCurrent);
