@@ -31,6 +31,16 @@ public class InputWindow extends JFrame {
         host = new JTextField();
         port = new JTextField();
         okButton = new JButton("OK");
+        port.addActionListener(ae -> {
+            port.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+                    if(e.getKeyChar() == '\n'){
+                        okButton.doClick();
+                    }
+                }
+            });
+        });
         okButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {

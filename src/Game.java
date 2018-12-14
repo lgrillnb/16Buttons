@@ -14,6 +14,7 @@ public class Game extends JFrame {
     private JMenuBar menuBar;
     private JMenu menu_modi;
     private JMenu menu_showCurrent;
+    private JMenu menu_info;
     private JMenuItem menuItemSingle;
     private JMenuItem menuItemMulti;
     private JButton readyButton;
@@ -68,10 +69,19 @@ public class Game extends JFrame {
         menu_showCurrent.setEnabled(false);
         menuItemSingle = new JMenuItem("Single-player");
         menuItemMulti = new JMenuItem("Multi-player");
-        menu_modi.add(menuItemSingle);                      //todo: add Info-menu to show all functions and shortcuts
+        menu_info = new JMenu("Info");
+        JMenuItem menuItemInfo_space = new JMenuItem("[Leertaste] springt zur Chat-eingabe (nur im Multiplayer)");
+        JMenuItem menuItemInfo_badwordfilter = new JMenuItem("Unhöfliche Wörter werden geblockt (im Chat)");
+        JMenuItem menuItemInfo_copyright = new JMenuItem("© by Lori und Schörk");
+        menu_info.add(menuItemInfo_space);
+        menu_info.add(menuItemInfo_badwordfilter);
+        menu_info.add(menuItemInfo_copyright);
+        menu_modi.add(menuItemSingle);
         menu_modi.add(menuItemMulti);
-        menuBar.add(menu_modi);
-        menuBar.add(menu_showCurrent);
+        menuBar.setLayout(new BorderLayout());
+        menuBar.add(menu_modi, BorderLayout.WEST);
+        menuBar.add(menu_showCurrent, BorderLayout.CENTER);
+        menuBar.add(menu_info, BorderLayout.EAST);
 
         timeLabel = new JLabel("To start select a game-modi");
         readyButton = new JButton("NOT READY");
@@ -152,7 +162,7 @@ public class Game extends JFrame {
         this.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent windowEvent) {
-                    stopMultiplayer();
+                    if (multiplayerIsRunning) stopMultiplayer();
                 }
                 @Override
                 public void windowDeiconified(WindowEvent windowEvent) {
