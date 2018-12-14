@@ -110,6 +110,7 @@ public class Server {
                     conn.addActionListener(serverListner);
                     for(myConnection Conn : connList){
                         conn.sendMessage("new partner:" + Conn.getName());   //informiere mich welche partner es schon gibt
+                        //todo: partner is ready into myConnection
                     }
                     connList.add(conn);
                     System.out.println("SERVER: new connection");
