@@ -45,19 +45,28 @@ public class InputWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 String tempname = name.getText();
-                if(tempname.contains("(") || tempname.contains(")") || tempname.contains("[") || tempname.contains("]")
-                        || tempname.contains("{") || tempname.contains("}")){
-                    name.setText("");
-                    JOptionPane pane = new JOptionPane("Name do not must contain brackets");
+                if(tempname.length() >= 2) {
+                    if (tempname.contains("(") || tempname.contains(")") || tempname.contains("[") || tempname.contains("]")
+                            || tempname.contains("{") || tempname.contains("}")) {
+                        name.setText("");
+                        JOptionPane pane = new JOptionPane("Brackets in Name");
+                        JDialog namedialog = pane.createDialog("Wrong Name");
+                        namedialog.setModal(false);
+                        namedialog.setVisible(true);
+                        new Timer(2000, e -> namedialog.setVisible(false)).start();
+
+
+                    } else {
+                        InputWindow.this.setVisible(false);
+                        saveListener.actionPerformed(new ActionEvent(InputWindow.this, 0, ""));
+                    }
+                }else{
+                    name.setText(""); name.setText("");
+                    JOptionPane pane = new JOptionPane("Name to short");
                     JDialog namedialog = pane.createDialog("Wrong Name");
                     namedialog.setModal(false);
                     namedialog.setVisible(true);
                     new Timer(2000, e -> namedialog.setVisible(false)).start();
-
-
-                }else {
-                    InputWindow.this.setVisible(false);
-                    saveListener.actionPerformed(new ActionEvent(InputWindow.this, 0, ""));
                 }
             }
         });
