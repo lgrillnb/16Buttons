@@ -17,12 +17,12 @@ public class InputWindow extends JFrame {
     private JPanel panel;
     private ActionListener saveListener;
 
-    public InputWindow() {
+    public InputWindow(Game cb) {
         this.setTitle("Multiplayer Configuration");
         this.setSize(300, 200);
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         this.setLayout(new BorderLayout());
-        this.setLocationRelativeTo(null);
+        this.setLocation(cb.getLocation().x + (cb.getWidth()-this.getWidth())/2, cb.getLocation().y + (cb.getHeight()-this.getHeight())/2);
 
         nameLabel = new JLabel("Enter your name");
         hostLabel = new JLabel("Enter your host-adress");

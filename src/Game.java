@@ -72,8 +72,12 @@ public class Game extends JFrame {
         menu_info = new JMenu("Info");
         JMenuItem menuItemInfo_space = new JMenuItem("[Leertaste] springt zur Chat-eingabe (nur im Multiplayer)");
         JMenuItem menuItemInfo_badwordfilter = new JMenuItem("Unhöfliche Wörter werden geblockt (im Chat)");
+        JMenuItem menuItemInfo_nameInput1 = new JMenuItem("Name darf []{}() nicht beinhalten (nur im Multiplayer)");
+        JMenuItem menuItemInfo_nameInput2 = new JMenuItem("Name muss länger als 2 Zeichen sein (nur im Multiplayer)");
         JMenuItem menuItemInfo_copyright = new JMenuItem("© by Lori und Schörk");
         menu_info.add(menuItemInfo_space);
+        menu_info.add(menuItemInfo_nameInput1);
+        menu_info.add(menuItemInfo_nameInput2);
         menu_info.add(menuItemInfo_badwordfilter);
         menu_info.add(menuItemInfo_copyright);
         menu_modi.add(menuItemSingle);
@@ -229,7 +233,7 @@ public class Game extends JFrame {
     }
 
     private void startMultiplayer() {
-        InputWindow iw = new InputWindow();
+        InputWindow iw = new InputWindow(this);
         iw.setListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
