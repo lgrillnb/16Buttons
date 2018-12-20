@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 public class SingleRandomizerThread extends Thread {
     private Game game;
     
+    @SuppressWarnings("Duplicates")
     @Override
     public synchronized void run() {
         game.actualButtonList.clear();

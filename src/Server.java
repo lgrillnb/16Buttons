@@ -22,13 +22,17 @@ public class Server {
             myConnection conn = (myConnection) ae.getSource();
             if(ae.getActionCommand().startsWith("ready")){
                 readyCounter++;
+                conn.setIsReady(true);
                 int index = connList.indexOf(conn);
+                boolean ready = false;
                 for(int i = 0; i < connList.size(); i++){
                     if(i != index){
                         connList.get(i).sendMessage("partner is ready:" + conn.getName());
                     }
+                    ready = true;
+                    if(!connList.get(i).getIsReady()) ready = false;
                 }
-                if(readyCounter == connList.size() && readyCounter > 1){
+                if(ready && readyCounter > 1){
                     calcDelayAndButons();
                 }
             } else if(ae.getActionCommand().startsWith("my name")){
@@ -110,7 +114,7 @@ public class Server {
                     conn.addActionListener(serverListner);
                     for(myConnection Conn : connList){
                         conn.sendMessage("new partner:" + Conn.getName());   //informiere mich welche partner es schon gibt
-                        //todo: partner is ready into myConnection
+                        if(Conn.getIsReady()) conn.sendMessage("partner is ready:" + Conn.getName());
                     }
                     connList.add(conn);
                     System.out.println("SERVER: new connection");
@@ -124,8 +128,7 @@ public class Server {
             }
         }).start();
     }
-
-
+    
     public static void main(String[] args) {
         Server s = new Server(1234);
         s.start();

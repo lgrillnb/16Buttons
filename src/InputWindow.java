@@ -54,8 +54,6 @@ public class InputWindow extends JFrame {
                         namedialog.setModal(false);
                         namedialog.setVisible(true);
                         new Timer(2000, e -> namedialog.setVisible(false)).start();
-
-
                     } else {
                         InputWindow.this.setVisible(false);
                         saveListener.actionPerformed(new ActionEvent(InputWindow.this, 0, ""));

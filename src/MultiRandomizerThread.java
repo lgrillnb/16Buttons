@@ -6,6 +6,7 @@ public class MultiRandomizerThread extends Thread {
     private Game game;
     private Client client;
     
+    @SuppressWarnings("Duplicates")
     @Override
     public synchronized void run() {
         game.actualButtonList = client.actualButtonList;

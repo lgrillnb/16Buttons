@@ -14,6 +14,7 @@ public class myConnection {
     private int clickDuration;
     private String name;
     private int score;
+    private boolean isReady = false;
 
     public myConnection(Socket socket) {
         try {
@@ -83,4 +84,6 @@ public class myConnection {
     }
     public void setScore(int score){ this.score = score;}
     public int getScore(){ return this.score;}
+    public void setIsReady(boolean isReady){ this.isReady = isReady;}
+    public boolean getIsReady(){ return this.isReady;}
 }

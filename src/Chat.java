@@ -81,14 +81,12 @@ public class Chat extends JFrame {
             }
         });
 
-
         mainpanel = new JPanel(new BorderLayout());
         subpanel = new JPanel(new BorderLayout());
         subpanel.add(input, BorderLayout.CENTER);
         subpanel.add(butsend, BorderLayout.EAST);
         mainpanel.add(subpanel, BorderLayout.SOUTH);
         mainpanel.add(scpane, BorderLayout.CENTER);
-
 
         suggespanel = new JPanel( new FlowLayout());
         butbusted = new JButton("BUSTED");
@@ -136,7 +134,6 @@ public class Chat extends JFrame {
 
         this.add(mainpanel);
         this.setVisible(true);
-
     }
 
     public void setChathistory(String message){
